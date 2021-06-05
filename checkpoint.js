@@ -12,6 +12,11 @@ function menorMayor(numeros) {
   // y 15 es el número más grande (mayor) dentro del arreglo [4, 6, 1, 7, 15]
 
   // Tu código aca:
+  let list = [];
+  list.push(Math.min(...numeros));
+  list.push(Math.max(...numeros));
+
+  return list;
 
 }
 
@@ -23,6 +28,15 @@ function stringMasLarga(strings) {
   // stringMasLarga(['JavaScript', 'HTML', 'CSS']); debe retornar 'JavaScript'
 
   // Tu código aca
+  let list1 = [];
+
+  for (i = 0; i < strings.length; i++) {
+    list1.push(strings[i].length)
+  };
+
+  const valor = strings.filter(word => word.length === Math.max(...list1));
+
+  return valor[0];
 }
 
 function buscarAmigo(amigos, nombre) {
@@ -35,6 +49,7 @@ function buscarAmigo(amigos, nombre) {
   //  buscarAmigo(amigos, 'toni') debe devolver { nombre: 'toni', edad: 33 };
 
   // Tu código aca:
+  return amigos.filter(x => x.nombre === nombre)[0];
   
 }
 
@@ -53,7 +68,16 @@ function sumArray(array, n) {
   // por lo tanto también debería devolver false en este caso
 
   // Tu código aca:
+  for (i = 0; i < array.length; i++) {
+    for (j = i + 1; j < array.length; j++) {
+      let sum = array[i] + array[j];
+      if (sum === n) {
+        return true;
+      } 
+    }
+  }
 
+  return false;
 
 };
 
@@ -67,6 +91,10 @@ function pluck(array, propiedad) {
   // Pista: es una buena oportunidad para usar map.
 
   // Tu código acá:
+  let ar = array.map(function(producto) {
+    return producto[propiedad];
+  });
+  return ar;
 
 }
 
@@ -80,6 +108,10 @@ function crearClasePersona() {
       // Inicializar las propiedades de la persona con los valores recibidos como argumento
 
       // Tu código aca:
+      this.nombre = nombre;
+      this.edad = edad;
+      this.hobbies = hobbies;
+      this.amigos = amigos;
 
     }
 
@@ -89,6 +121,10 @@ function crearClasePersona() {
       // No debe retornar nada.
 
       // Tu código aca:
+      this.amigos.push({
+        nombre: nombre,
+        edad: edad
+      });
 
     }
 
@@ -97,6 +133,7 @@ function crearClasePersona() {
       // No debe retornar nada.
 
       // Tu código aca:
+      this.hobbies.push(hobby);
 
     }
     getFriends() {
@@ -107,6 +144,11 @@ function crearClasePersona() {
       // persona.getFriends() debería devolver ['martin', 'toni']
 
       // Tu código aca:
+      //pluck(this.amigos, this.nombre);
+      let inte = this.amigos.map(function(amigo) {
+        return amigo.nombre;
+      })
+      return inte;
 
     }
 
@@ -116,7 +158,7 @@ function crearClasePersona() {
       // persona.getHobbies() debe devolver ['correr', 'dormir', 'nadar']
 
       // Tu código aca:
-
+      return this.hobbies;
     }
 
     getPromedioEdad() {
@@ -135,6 +177,14 @@ function crearClasePersona() {
       // persona.getPromedioEdad() debería devolver 29 ya que (33 + 25) / 2 = 29
 
       // Tu código aca:
+      let sum_edad = this.amigos.map(function(amigo) {
+        return amigo.edad;
+      });
+      let suma = 0;
+      sum_edad.forEach(function(numero) {
+        suma += numero;
+      });
+      return suma/sum_edad.length;
 
     }
   };
@@ -167,6 +217,15 @@ function filtrar(funcion) {
   // productos.filtrar(function(p) {
   //   return p.price >= 50;
   // }) => [{price: 100, name:'tv'}]
+  Array.prototype.filtrar = function(funcion) {
+    let arreglo = [];
+    for (i = 0; i < this.length; i++) {
+      if (funcion(this[i])) {
+        arreglo.push(this[i])
+      };
+    };
+    return arreglo;
+  };
 
 };
 
